@@ -10,6 +10,10 @@
 
 ## Let's start
 
+```SQL
+SELECT * from my_table
+WHERE name = "victor";
+```
 
 ## Author
 
