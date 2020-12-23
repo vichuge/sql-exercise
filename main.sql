@@ -247,6 +247,70 @@ where
 group by continent
 
 /* --- 6 Join---*/
+SELECT matchid, player FROM goal 
+  WHERE teamid = 'GER'
+
+SELECT id,stadium,team1,team2
+  FROM game
+where id = 1012
+
+SELECT player, teamid, stadium, mdate
+  FROM game JOIN goal ON (id=matchid)
+where goal.teamid = 'GER'
+
+select team1, team2, player from game
+join goal on id=matchid
+where player like 'Mario%'
+
+SELECT player, teamid, coach, gtime
+  FROM goal join eteam on teamid=id
+ WHERE gtime<=10
+
+select mdate, teamname from game
+join eteam on team1=eteam.id
+where coach = 'Fernando Santos'
+
+select player from goal
+join game on matchid=id
+where stadium = 'National Stadium, Warsaw'
+
+SELECT distinct(player)
+  FROM game JOIN goal ON matchid = id 
+    WHERE (team1='GER' or team2='GER')
+and teamid != 'GER'
+
+SELECT teamname, count(gtime)
+  FROM eteam JOIN goal ON id=teamid
+group by teamname
+ ORDER BY teamname
+
+select stadium, count(gtime) from game
+join goal on id=matchid
+group by stadium
+
+SELECT matchid,mdate, count(gtime)
+  FROM game JOIN goal ON matchid = id 
+ WHERE (team1 = 'POL' OR team2 = 'POL')
+group by matchid, mdate
+
+SELECT matchid,mdate, count(gtime)
+  FROM game JOIN goal ON matchid = id 
+ WHERE (team1 = 'GER' OR team2 = 'GER')
+and teamid = 'GER'
+group by matchid, mdate
+
+SELECT id,mdate,
+  team1,
+  CASE WHEN teamid=team1 THEN 
+  (select count(gtime) from goal where teamid = team1 and matchid = id) else 0
+  END score1,
+  team2,
+  case when teamid=team2 then 
+  (select count(gtime) from goal where teamid = team2 and matchid = id) else 0
+  end score2
+  FROM game x JOIN goal ON matchid = id
+group by id, mdate, team1, teamid, team2
+order by mdate
 
 /* --- 7 More join operations---*/
 
