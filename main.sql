@@ -313,6 +313,55 @@ group by id, mdate, team1, teamid, team2
 order by mdate
 
 /* --- 7 More join operations---*/
+SELECT id, title
+ FROM movie
+ WHERE yr=1962
+
+select yr from movie
+where title = 'Citizen Kane'
+
+select id, title, yr from movie
+where title like '%Star Trek%'
+order by yr
+
+select id from actor
+where name = 'Glenn Close'
+
+select id from movie
+where title = 'Casablanca'
+
+select name from movie a
+join casting b on a.id=b.movieid
+join actor c on b.actorid=c.id
+where a.id=11768
+
+select name from movie a
+join casting b on a.id=b.movieid
+join actor c on b.actorid=c.id
+where a.title = 'Alien'
+
+select title from movie a
+join casting b on a.id=b.movieid
+join actor c on b.actorid=c.id
+where c.name = 'Harrison Ford'
+
+select title from movie a
+join casting b on a.id=b.movieid
+join actor c on b.actorid=c.id
+where c.name = 'Harrison Ford'
+and b.ord !=1
+
+select a.title, c.name from movie a
+join casting b on a.id=b.movieid
+join actor c on b.actorid=c.id
+where b.ord = 1
+
+SELECT yr,COUNT(title) FROM
+  movie JOIN casting ON movie.id=movieid
+        JOIN actor   ON actorid=actor.id
+WHERE name='Rock Hudson'
+GROUP BY yr
+HAVING COUNT(title) > 2
 
 /* --- 8 Using null---*/
 
