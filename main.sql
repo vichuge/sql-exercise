@@ -178,7 +178,6 @@ SELECT winner, subject
  ORDER BY subject IN ('Physics','Chemistry'),subject,winner
 
 /* --- 4 Select within select---*/
-/* world(name, continent, area, population, gdp) */
 SELECT name FROM world
   WHERE population >
      (SELECT population FROM world
@@ -220,6 +219,32 @@ select continent, sum(population) as pop from world a
 group by continent
 
 /* --- 5 Sum and count---*/
+SELECT SUM(population)
+FROM world
+
+select continent from world
+group by continent
+
+select sum(gdp) from world
+where continent = 'Africa'
+
+select count(name) from world
+where area >= 1000000
+
+select sum(population) from world
+where name in('Estonia', 'Latvia', 'Lithuania')
+
+select continent, count(name) from world
+group by continent
+
+select continent, count(name) from world
+where population >= 10000000
+group by continent
+
+select continent from world a
+where 
+(select sum(population) from world where continent = a.continent group by continent) >= 100000000
+group by continent
 
 /* --- 6 Join---*/
 
