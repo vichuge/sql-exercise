@@ -381,10 +381,76 @@ SELECT teacher.name, dept.name
 
 select name, COALESCE(mobile, '07986 444 2266') from teacher
 
-
 /* --- 8+ Numeric examples---*/
+SELECT A_STRONGLY_AGREE
+  FROM nss
+ WHERE question='Q01'
+   AND institution='Edinburgh Napier University'
+   AND subject='(8) Computer Science'
+
+SELECT institution, subject
+  FROM nss
+ WHERE question='Q15'
+   AND score>=100
+
+SELECT institution,score
+  FROM nss
+ WHERE question='Q15'
+   AND score<50
+   AND subject='(8) Computer Science'
+
+SELECT subject, sum(response)
+  FROM nss
+ WHERE question='Q22'
+   AND (subject='(8) Computer Science' or subject='(H) Creative Arts and Design')
+group by subject
+
+SELECT subject, sum(response*A_STRONGLY_AGREE*.01) 
+  FROM nss
+ WHERE question='Q22'
+   AND (subject='(8) Computer Science' or subject='(H) Creative Arts and Design')
+group by subject
+
+SELECT subject, round(sum(response*A_STRONGLY_AGREE/100)/sum(response)*100,0)
+  FROM nss
+ WHERE question='Q22'
+   AND (subject='(8) Computer Science' or subject='(H) Creative Arts and Design')
+group by subject
+
+SELECT institution, ROUND(SUM(response*score/100)/SUM(response)*100,0)
+  FROM nss
+ WHERE question='Q22'
+   AND (institution LIKE '%Manchester%')
+group by institution
+ORDER BY institution
+
+SELECT institution, sum(sample),
+(SELECT sample FROM nss y
+WHERE subject='(8) Computer Science'
+AND x.institution = y.institution
+AND question='Q01')
+  FROM nss x
+ WHERE question='Q01'
+   AND (institution LIKE '%Manchester%')
+group by institution
 
 /* --- 9- Window function---*/
+SELECT lastName, party, votes
+  FROM ge
+ WHERE constituency = 'S14000024' AND yr = 2017
+ORDER BY votes DESC
+
+SELECT party, votes,
+       RANK() OVER (ORDER BY votes DESC) as posn
+  FROM ge
+ WHERE constituency = 'S14000024' AND yr = 2017
+ORDER BY party
+
+SELECT yr,party, votes,
+      RANK() OVER (PARTITION BY yr ORDER BY votes DESC) as posn
+  FROM ge
+ WHERE constituency = 'S14000021'
+ORDER BY party,yr
 
 /* --- 9+ Covid 19---*/
 
