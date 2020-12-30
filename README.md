@@ -24,3 +24,7 @@ Feel free to check the [issues page](https://github.com/vichuge/sql-exercise/iss
 ## Show your support
 
 Give a ⭐️ if you like this project!
+
+## Exercises
+
+You can find the original exercises in https://sqlzoo.net/
