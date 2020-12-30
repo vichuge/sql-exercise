@@ -452,6 +452,25 @@ SELECT yr,party, votes,
  WHERE constituency = 'S14000021'
 ORDER BY party,yr
 
-/* --- 9+ Covid 19---*/
+SELECT constituency, party
+FROM ge x 
+WHERE constituency BETWEEN 'S14000021' AND 'S14000026'
+AND yr  = 2017 AND votes >= ALL(SELECT votes FROM ge y  WHERE x.constituency = y. constituency AND y.yr = 2017)
+ORDER BY constituency,votes DESC
+
+SELECT party , COUNT(*)
+FROM ge x 
+WHERE constituency like 'S%'
+AND yr  = 2017 AND votes >= ALL(SELECT votes FROM ge y  WHERE x.constituency = y. constituency AND y.yr = 2017)
+GROUP BY party
 
 /* --- 9 Self join---*/
+select count(id) from stops
+
+select id from stops where name = 'Craiglockhart'
+
+SELECT id, name FROM stops, route
+WHERE id=stop
+AND company='LRT'
+AND num='4'
+
